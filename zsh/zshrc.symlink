@@ -37,4 +37,7 @@ do
   source $file
 done
 
+# Add Solarized colors to folders and files. Must have coreutils installed.
+eval `gdircolors ~/.dotfiles/zsh/dir-colors.ansi-light`
+
 unset config_files
