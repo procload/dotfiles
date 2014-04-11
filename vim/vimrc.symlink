@@ -1,4 +1,5 @@
 syntax on
+let g:Powerline_symbols = 'fancy'
 
 " Wrap gitcommit file types at the appropriate length
 filetype indent plugin on
