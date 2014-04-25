@@ -33,7 +33,7 @@ autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=
 
 " Solarized Setup
 syntax enable
-set background=dark
+set background=light
 colorscheme solarized
 
 
