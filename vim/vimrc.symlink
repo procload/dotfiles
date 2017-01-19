@@ -1,5 +1,234 @@
-syntax on
-let g:Powerline_symbols = 'fancy'
+call pathogen#helptags()
+execute pathogen#infect()
 
-" Wrap gitcommit file types at the appropriate length
-filetype indent plugin on
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible                  " Use vim, no vi defaults
+set linespace=1                   " Increase linespacing in MacVim
+set encoding=utf-8                " Use UTF-8 everywhere
+set expandtab                     " Use spaces instead of tabs
+set tabstop=2                     " Even if it is a tab limit it to two spaces
+set shiftwidth=2                  " Use two spaces instead of a tab
+set shiftround                    " Use multiple of shiftwidth when indenting with '<' and '>'
+set softtabstop=2                 " How many columns of text Vim uses when hitting Tab in insert mode
+set scrolloff=5                   " Sets the number of lines above/below cursor when searching
+set autoindent                    " Auto-indent all files
+set showmode                      " Show either -- INSERT -- or --- VISUAL --- depending on mode
+set showcmd                       " More info on mode in bottom
+set hidden                        " Causes files to be hidden instead of closed to prevent error messages
+set wildmenu                      " Enable code completion
+set wildmode=list:longest         " Set order of code completion results
+set visualbell                    " Flash screen instead of beeping for Vim errors
+set cursorline                    " Highlight current cursor line
+set ttyfast                       " Improves redrawing
+set ruler                         " Add a line / column display in the bottom right-hand section of the screen
+set backspace=indent,eol,start    " backspace through everything in insert mode
+set laststatus=2                  " always display the status bar
+set gdefault                      " have :s///g flag by default on
+set list                          " Show invisible characters
+set number                        " Show line numbers
+set nowrap                        " don't wrap lines
+set tw=0                          " Remove word-wrapping
+let mapleader = ","               " Remap leader to ,
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim UI
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:solarized_termtrans = 1     " let Solarized look better in vim terminal
+syntax enable
+set background=dark
+colorscheme solarized
+
+set guifont=InputMono\ for\ Powerline:h15
+" set guifont=Operator\ Mono\ Book:h17
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+ let g:airline_powerline_fonts = 1
+
+" unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = ''
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = ''
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+
+set listchars=tab:»·,eol:¬        " Show tabstops and EOL characters
+
+" Shortcut to hide/show EOL characters
+nmap <leader>l :set list!<CR>
+
+" Show/hide NERDTREE
+nmap <silent> <C-D> :NERDTreeToggle<CR>
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Racket/List specific configs
+
+" set guifont=InputMono\ for\ Powerline:h17
+" let g:airline_powerline_fonts = 1
+
+set listchars=tab:»·,eol:¬        " Show tabstops and EOL characters
+
+" Shortcut to hide/show EOL characters
+nmap <leader>l :set list!<CR>
+
+" Show/hide NERDTREE
+nmap <silent> <C-D> :NERDTreeToggle<CR>
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Racket/List specific configs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rainbow_active = 1
+
+if has("autocmd")
+  au BufReadPost *.rkt,*.rktl set filetype=scheme
+endif
+
+" Send current selected text to tmux
+vmap <C-c><C-c> <Plug>SendSelectionToTmux
+nmap <C-c><C-c> <Plug>NormalModeSendToTmux
+nmap <C-c>r <Plug>SetTmuxVars
+
+" Run this script to help vim's indentation for Lisp
+" autocmd filetype lisp,scheme,art setlocal equalprg=scmindent.rkt
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Searching
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map CMD+F to search
+:nmap <D-F> :Ag<space>
+
+set hlsearch                      " highlight matches
+set incsearch                     " incremental searching
+set ignorecase                    " searches are case insensitive...
+set smartcase                     " ... unless they contain at least one capital letter
+
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files --cached --exclude-standard --others']
+    \ },
+  \ 'fallback': 'find %s -type f'
+  \ }
+
+"" ctrlp ignores these files and directorys
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\',
+  \ }
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Syntax Helpers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin indent on         " load file type plugins + indentation
+syntax enable                     " Turn on syntax highlighting
+
+" Syntastic support for SCSSLint
+let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_scss_args = ['--config ~/.dotfiles/config/scss-lint.yml']
+
+let g:syntastic_check_on_open = 1
+
+let g:html_indent_tags = 'li\|p'  " Treat <li> and <p> tags like the block tags they are
+
+au BufRead,BufNewFile *.scss set filetype=scss
+
+autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map F5 so run CSSComb to reorder CSS properties
+autocmd FileType scss,css nnoremap <buffer> <F5> :call CSScomb()<CR>
+function! CSScomb()
+  execute "silent !csscomb " . expand('%')
+  redraw!
+endfunction
+
+" Backup and swap files
+set backupdir^=~/.vim/_backup//    " where to put backup files.
+set directory^=~/.vim/_temp//      " where to put swap files.
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" Swap v and CTRL-V, because Block mode is more useful that Visual mode
+nnoremap    v   <C-V>
+nnoremap <C-V>     v
+
+vnoremap    v   <C-V>
+vnoremap <C-V>     v
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files to Ignore
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Disable output and VCS files
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+
+" Disable archive files
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+
+" Ignore bundler and sass cache
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+
+" Ignore librarian-chef, vagrant, test-kitchen and Berkshelf cache
+set wildignore+=*/tmp/librarian/*,*/.vagrant/*,*/.kitchen/*,*/vendor/cookbooks/*
+
+" Ignore rails temporary asset caches
+set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MacVim Specific
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set antialias                     " MacVim: smooth fonts
+set guioptions=aAce               " Turn off MacVim's Scrollbars, etc.
+let g:solarized_menu=0            " no menu for Solarized in MacVim
+
+if has("gui_macvim") && has("gui_running")
+  " Map command-[ and command-] to indenting or outdenting
+  " while keeping the original selection in visual mode
+  vmap <D-]> >gv
+  vmap <D-[> <gv
+
+  nmap <D-]> >>
+  nmap <D-[> <<
+
+  omap <D-]> >>
+  omap <D-[> <<
+
+  imap <D-]> <Esc>>>i
+  imap <D-[> <Esc><<i
+
+  " Bubble single lines
+  nmap <D-Up> [e
+  nmap <D-Down> ]e
+  nmap <D-k> [e
+  nmap <D-j> ]e
+
+  " Bubble multiple lines
+  vmap <D-Up> [egv
+  vmap <D-Down> ]egv
+  vmap <D-k> [egv
+  vmap <D-j> ]egv
+endif
