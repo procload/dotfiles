@@ -39,7 +39,7 @@ let mapleader = ","               " Remap leader to ,
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:solarized_termtrans = 1     " let Solarized look better in vim terminal
 syntax enable
-set background=dark
+set background=light
 colorscheme solarized
 
 set guifont=InputMono\ for\ Powerline:h15

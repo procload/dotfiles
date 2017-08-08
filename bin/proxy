@@ -1,0 +1,14 @@
+#!/bin/sh
+USER_NAME=$1
+PASSWORD=$2
+
+if [ -z "$2" ]
+then
+  echo "Must provide username and password for proxy authentication"
+  exit 1
+fi
+
+curl -u USER_NAME:PASSWORD -x $http_proxy --url www.google.com >/dev/null 2>&1
+echo "HTTP Proxy has been successfully authenticated."
+curl -m 2 -u USER_NAME:PASSWORD -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Host: echo.websocket.org" -H "Origin: https://www.websocket.org" https://echo.websocket.org >/dev/null 2>&1
+echo "Websocket Proxy has been successfully authenticated."
