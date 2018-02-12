@@ -1,7 +1,4 @@
-call pathogen#helptags()
-execute pathogen#infect()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                  " Use vim, no vi defaults
@@ -33,16 +30,61 @@ set tw=0                          " Remove word-wrapping
 let mapleader = ","               " Remap leader to ,
 
 
+call plug#begin('~/.vim/plugged')
+  Plug 'icymind/NeoSolarized'
+
+  Plug 'kien/ctrlp.vim'
+
+  Plug 'rking/ag.vim'
+
+  Plug 'tpope/vim-surround'
+
+  Plug 'othree/html5.vim'
+
+  Plug 'cakebaker/scss-syntax.vim'
+
+  Plug 'vim-syntastic/syntastic'
+
+  Plug 'tomtom/tcomment_vim'
+
+  Plug 'ntpeters/vim-better-whitespace'
+
+  Plug 'csscomb/vim-csscomb'
+
+  Plug 'easymotion/vim-easymotion'
+
+  Plug 'tpope/vim-fugitive'
+
+  Plug 'nathanaelkane/vim-indent-guides'
+
+  " Rainbow Parens
+  Plug 'losingkeys/vim-niji'
+
+  Plug 'sheerun/vim-polyglot'
+
+  " File browser
+  Plug 'tpope/vim-vinegar'
+
+  Plug 'tpope/vim-surround'
+
+  Plug 'vim-airline/vim-airline'
+
+  Plug 'vim-airline/vim-airline-themes'
+
+" Initialize plugin system
+call plug#end()
+
+colorscheme NeoSolarized
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim UI
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:solarized_termtrans = 1     " let Solarized look better in vim terminal
-syntax enable
-set background=light
-colorscheme solarized
+" let g:solarized_termtrans = 1     " let Solarized look better in vim terminal
+" syntax enable
+" set background=light
+" colorscheme solarized
 
-set guifont=InputMono\ for\ Powerline:h15
+" set guifont=InputMono\ for\ Powerline:h15
 " set guifont=Operator\ Mono\ Book:h17
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -201,11 +243,12 @@ set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MacVim Specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set antialias                     " MacVim: smooth fonts
-set guioptions=aAce               " Turn off MacVim's Scrollbars, etc.
-let g:solarized_menu=0            " no menu for Solarized in MacVim
 
 if has("gui_macvim") && has("gui_running")
+  set antialias                     " MacVim: smooth fonts
+  set guioptions=aAce               " Turn off MacVim's Scrollbars, etc.
+  let g:solarized_menu=0            " no menu for Solarized in MacVim
+  
   " Map command-[ and command-] to indenting or outdenting
   " while keeping the original selection in visual mode
   vmap <D-]> >gv
