@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Used to ping and reset the internal proxy at 84.51
+# 
+
 
 while $(getopts hu:p: "getopts" "$1") ; do
     case "$1" in
